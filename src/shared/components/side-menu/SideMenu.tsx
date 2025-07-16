@@ -8,18 +8,23 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import type { IReactChildren } from "../../interfaces/IReactChildren";
 import { deepOrange } from "@mui/material/colors";
+import { useDrawerContext } from "../../contexts/DrawerContext";
 
 export const SideMenu: React.FC<IReactChildren> = ({ children }) => {
   const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const { isDrawerOpen, toggleDrawerOpen } = useDrawerContext();
 
   return (
     <>
-      <Drawer variant="permanent">
-        <Box
+      <Drawer open={isDrawerOpen} variant={smDown ? 'temporary' : 'permanent'} onClose={toggleDrawerOpen}>
+       <Box
           width={theme.spacing(28)}
           display={"flex"}
           flexDirection={"column"}
@@ -57,8 +62,9 @@ export const SideMenu: React.FC<IReactChildren> = ({ children }) => {
         </Box>
       </Drawer>
 
-      <Box height="100vh" marginLeft={theme.spacing(28)}></Box>
-      {children}
+      <Box height="100vh" marginLeft={smDown ? 0 : theme.spacing(28)}>
+        {children}
+      </Box>
     </>
   );
 };

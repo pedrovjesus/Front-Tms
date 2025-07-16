@@ -11,12 +11,12 @@ import { LightTheme } from "../themes/Light";
 import { Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
-interface ThemeContextData {
+interface IThemeContextData {
   themeName: "light" | "dark";
   toggleTheme: () => void;
 }
 
-const ThemeContext = createContext({} as ThemeContextData);
+const ThemeContext = createContext({} as IThemeContextData);
 
 export const useAppThemeContext = () => {
   return useContext(ThemeContext);

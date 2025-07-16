@@ -1,18 +1,21 @@
 import { BrowserRouter } from "react-router-dom";
-import { appRoutes } from "./routes";
+import { AppRoutes } from "./routes/Routes";
 import "./App.css";
 import { AppThemeProvider } from "./shared/contexts/ThemeContext";
 import { SideMenu } from "./shared/components/side-menu/SideMenu";
+import { DrawerProvider } from "./shared/contexts/DrawerContext";
 
 function App() {
   return (
-    <>
-      <AppThemeProvider>
+    <AppThemeProvider>
+      <DrawerProvider>
         <BrowserRouter>
-          <SideMenu>{appRoutes()}</SideMenu>
+          <SideMenu>
+            <AppRoutes />
+          </SideMenu>
         </BrowserRouter>
-      </AppThemeProvider>
-    </>
+      </DrawerProvider>
+    </AppThemeProvider>
   );
 }
 
