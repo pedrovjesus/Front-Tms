@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { Dashboard } from "../pages";
 
 export const AppRoutes = () => {
-  const { /*toggleDrawerOpen,*/ setDrawerOptions } = useDrawerContext();
+  const { setDrawerOptions } = useDrawerContext();
 
   useEffect(() => {
     setDrawerOptions([
