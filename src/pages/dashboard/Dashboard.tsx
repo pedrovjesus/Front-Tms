@@ -1,8 +1,9 @@
-import BaseLayout from "../../shared/layouts/BaseLayout"
-
+import BaseLayout from "../../shared/layouts/BaseLayout";
 
 export const Dashboard = () => {
-    return(
-        <BaseLayout title="Home"></BaseLayout>
-    )
-}
+  return (
+    <BaseLayout title="Home" toolBar={<>Barra de ferramentas</>}>
+      testando
+    </BaseLayout>
+  );
+};
