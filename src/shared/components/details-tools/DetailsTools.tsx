@@ -1,12 +1,27 @@
-import { Box, Button, Divider, Icon, Paper, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Icon,
+  Paper,
+  Skeleton,
+  useTheme,
+} from "@mui/material";
 
 interface IDetailsTools {
   textNewButton?: string;
+
   showNewButton?: boolean;
   showBackButton?: boolean;
   showDeleteButton?: boolean;
   showSaveButton?: boolean;
   showSaveAndBackButton?: boolean;
+
+  showNewButtonLoading?: boolean;
+  showBackButtonLoading?: boolean;
+  showDeleteButtonLoading?: boolean;
+  showSaveButtonLoading?: boolean;
+  showSaveAndBackButtonLoading?: boolean;
 
   onClickNewButton?: () => void;
   onClickSaveButton?: () => void;
@@ -21,6 +36,11 @@ const DetailsTools: React.FC<IDetailsTools> = ({
   showDeleteButton = true,
   showSaveButton = true,
   showSaveAndBackButton = false,
+  showNewButtonLoading = false,
+  showBackButtonLoading = false,
+  showDeleteButtonLoading = false,
+  showSaveButtonLoading = false,
+  showSaveAndBackButtonLoading = false,
   onClickNewButton,
   onClickSaveButton,
   onClickBackButton,
@@ -41,7 +61,7 @@ const DetailsTools: React.FC<IDetailsTools> = ({
       alignItems={"center"}
       component={Paper}
     >
-      {showSaveButton && (
+      {showSaveButton && !showSaveButtonLoading && (
         <Button
           variant="contained"
           color="primary"
@@ -52,8 +72,9 @@ const DetailsTools: React.FC<IDetailsTools> = ({
           Salvar
         </Button>
       )}
+      {showSaveButtonLoading && <Skeleton width={"100px"} height={"60px"} />}
 
-      {showSaveAndBackButton && (
+      {showSaveAndBackButton && !showSaveAndBackButtonLoading && (
         <Button
           variant="outlined"
           color="primary"
@@ -64,8 +85,12 @@ const DetailsTools: React.FC<IDetailsTools> = ({
           Salvar e voltar
         </Button>
       )}
+      {showSaveAndBackButtonLoading && (
+        <Skeleton width={"150px"} height={"60px"} />
+      )}
+      {showNewButtonLoading && <Skeleton width={"100px"} height={"60px"} />}
 
-      {showNewButton && (
+      {showNewButton && !showNewButtonLoading && (
         <Button
           variant="outlined"
           color="primary"
@@ -76,7 +101,9 @@ const DetailsTools: React.FC<IDetailsTools> = ({
           {textNewButton}
         </Button>
       )}
-      {showDeleteButton && (
+      {showDeleteButtonLoading && <Skeleton width={"100px"} height={"60px"} />}
+
+      {showDeleteButton && !showDeleteButtonLoading && (
         <Button
           variant="outlined"
           color="primary"
@@ -87,9 +114,10 @@ const DetailsTools: React.FC<IDetailsTools> = ({
           Apagar
         </Button>
       )}
+      {showBackButtonLoading && <Skeleton width={"100px"} height={"60px"} />}
 
       <Divider variant="middle" orientation="vertical" />
-      {showBackButton && (
+      {showBackButton && !showBackButtonLoading && (
         <Button
           variant="outlined"
           color="primary"
