@@ -5,8 +5,12 @@ import {
   Icon,
   Paper,
   Skeleton,
+  Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
+import SplitButton from "../split-button/SplitButton";
+import { useMemo } from "react";
 
 interface IDetailsTools {
   textNewButton?: string;
@@ -29,6 +33,7 @@ interface IDetailsTools {
   onClickDeleteButton?: () => void;
   onClickSaveAndBackButton?: () => void;
 }
+
 const DetailsTools: React.FC<IDetailsTools> = ({
   textNewButton = "Novo",
   showNewButton = true,
@@ -48,6 +53,80 @@ const DetailsTools: React.FC<IDetailsTools> = ({
   onClickSaveAndBackButton,
 }) => {
   const theme = useTheme();
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"));
+
+  const splitButtonOptions = useMemo(() => {
+    const optionsArray = [];
+
+    if (showNewButton) {
+      optionsArray.push({
+        id: "new",
+        text: textNewButton,
+        action:
+          onClickNewButton ||
+          (() => console.log("Novo (default) from SplitButton")),
+        loading: showNewButtonLoading,
+      });
+    }
+    if (showSaveButton) {
+      optionsArray.push({
+        id: "save",
+        text: "Salvar",
+        action:
+          onClickSaveButton ||
+          (() => console.log("Salvar (default) from SplitButton")),
+        loading: showSaveButtonLoading,
+      });
+    }
+    if (showSaveAndBackButton) {
+      optionsArray.push({
+        id: "saveAndBack",
+        text: "Salvar e voltar",
+        action:
+          onClickSaveAndBackButton ||
+          (() => console.log("Salvar e voltar (default) from SplitButton")),
+        loading: showSaveAndBackButtonLoading,
+      });
+    }
+    if (showDeleteButton) {
+      optionsArray.push({
+        id: "delete",
+        text: "Apagar",
+        action:
+          onClickDeleteButton ||
+          (() => console.log("Deletar (default) from SplitButton")),
+        loading: showDeleteButtonLoading,
+      });
+    }
+    if (showBackButton) {
+      optionsArray.push({
+        id: "back",
+        text: "Voltar",
+        action:
+          onClickBackButton ||
+          (() => console.log("Voltar (default) from SplitButton")),
+        loading: showBackButtonLoading,
+      });
+    }
+    return optionsArray;
+  }, [
+    textNewButton,
+    showNewButton,
+    showSaveButton,
+    showSaveAndBackButton,
+    showDeleteButton,
+    showBackButton,
+    showNewButtonLoading,
+    showSaveButtonLoading,
+    showSaveAndBackButtonLoading,
+    showDeleteButtonLoading,
+    showBackButtonLoading,
+    onClickNewButton,
+    onClickSaveButton,
+    onClickSaveAndBackButton,
+    onClickDeleteButton,
+    onClickBackButton,
+  ]);
 
   return (
     <Box
@@ -61,7 +140,7 @@ const DetailsTools: React.FC<IDetailsTools> = ({
       alignItems={"center"}
       component={Paper}
     >
-      {showSaveButton && !showSaveButtonLoading && (
+      {showSaveButton && !showSaveButtonLoading && !mdDown && (
         <Button
           variant="contained"
           color="primary"
@@ -69,12 +148,19 @@ const DetailsTools: React.FC<IDetailsTools> = ({
           disableElevation
           endIcon={<Icon>save</Icon>}
         >
-          Salvar
+          <Typography
+            variant="button"
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+            overflow={"hidden"}
+          >
+            Salva
+          </Typography>
         </Button>
       )}
       {showSaveButtonLoading && <Skeleton width={"100px"} height={"60px"} />}
 
-      {showSaveAndBackButton && !showSaveAndBackButtonLoading && (
+      {showSaveAndBackButton && !showSaveAndBackButtonLoading && !mdDown && (
         <Button
           variant="outlined"
           color="primary"
@@ -82,7 +168,14 @@ const DetailsTools: React.FC<IDetailsTools> = ({
           disableElevation
           endIcon={<Icon>save</Icon>}
         >
-          Salvar e voltar
+          <Typography
+            variant="button"
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+            overflow={"hidden"}
+          >
+            Salvar e voltar
+          </Typography>
         </Button>
       )}
       {showSaveAndBackButtonLoading && (
@@ -90,7 +183,7 @@ const DetailsTools: React.FC<IDetailsTools> = ({
       )}
       {showNewButtonLoading && <Skeleton width={"100px"} height={"60px"} />}
 
-      {showNewButton && !showNewButtonLoading && (
+      {showNewButton && !showNewButtonLoading && !mdDown && (
         <Button
           variant="outlined"
           color="primary"
@@ -98,12 +191,19 @@ const DetailsTools: React.FC<IDetailsTools> = ({
           disableElevation
           endIcon={<Icon>add</Icon>}
         >
-          {textNewButton}
+          <Typography
+            variant="button"
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+            overflow={"hidden"}
+          >
+            {textNewButton}
+          </Typography>
         </Button>
       )}
       {showDeleteButtonLoading && <Skeleton width={"100px"} height={"60px"} />}
 
-      {showDeleteButton && !showDeleteButtonLoading && (
+      {showDeleteButton && !showDeleteButtonLoading && !mdDown && (
         <Button
           variant="outlined"
           color="primary"
@@ -111,13 +211,20 @@ const DetailsTools: React.FC<IDetailsTools> = ({
           disableElevation
           endIcon={<Icon>delete</Icon>}
         >
-          Apagar
+          <Typography
+            variant="button"
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+            overflow={"hidden"}
+          >
+            Apagar
+          </Typography>
         </Button>
       )}
       {showBackButtonLoading && <Skeleton width={"100px"} height={"60px"} />}
 
-      <Divider variant="middle" orientation="vertical" />
-      {showBackButton && !showBackButtonLoading && (
+      {!mdDown && <Divider variant="middle" orientation="vertical" />}
+      {showBackButton && !showBackButtonLoading && !mdDown && (
         <Button
           variant="outlined"
           color="primary"
@@ -125,8 +232,19 @@ const DetailsTools: React.FC<IDetailsTools> = ({
           disableElevation
           endIcon={<Icon>arrow_back</Icon>}
         >
-          Voltar
+          <Typography
+            variant="button"
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+            overflow={"hidden"}
+          >
+            Voltar
+          </Typography>
         </Button>
+      )}
+
+      {mdDown && (
+        <SplitButton options={splitButtonOptions} initialSelectedIndex={0} />
       )}
     </Box>
   );
